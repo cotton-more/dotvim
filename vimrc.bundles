@@ -1,0 +1,69 @@
+" Bundles {
+    " General
+        Bundle 'scrooloose/nerdtree'
+        Bundle 'altercation/vim-colors-solarized'
+        Bundle 'tpope/vim-surround'
+        Bundle 'spf13/vim-autoclose'
+        Bundle 'kien/ctrlp.vim'
+        Bundle 'vim-scripts/sessionman.vim'
+        Bundle 'matchit.zip'
+        Bundle 'Lokaltog/vim-easymotion'
+        Bundle 'godlygeek/csapprox'
+        Bundle 'jistr/vim-nerdtree-tabs'
+        Bundle 'corntrace/bufexplorer'
+        Bundle 'mbbill/undotree'
+        Bundle 'myusuf3/numbers.vim'
+        Bundle 'nathanaelkane/vim-indent-guides'
+        Bundle 'vim-scripts/restore_view.vim'
+        Bundle 'ervandew/supertab'
+
+    " General Programming
+        " Pick one of the checksyntax, jslint, or syntastic
+        Bundle 'scrooloose/syntastic'
+        Bundle 'mattn/webapi-vim'
+        Bundle 'mattn/gist-vim'
+        Bundle 'scrooloose/nerdcommenter'
+        Bundle 'godlygeek/tabular'
+        if executable('ctags')
+            Bundle 'majutsushi/tagbar'
+        endif
+        Bundle 'tpope/vim-fugitive'
+        Bundle 'vim-scripts/hgrev'
+
+    " PHP
+        Bundle 'stephpy/vim-php-cs-fixer'
+
+    " Python
+        " Pick either python-mode or pyflakes & pydoc
+        Bundle 'klen/python-mode'
+        Bundle 'python.vim'
+        Bundle 'python_match.vim'
+        Bundle 'pythoncomplete'
+
+    " Javascript
+        Bundle 'leshill/vim-json'
+        Bundle 'groenewege/vim-less'
+        Bundle 'pangloss/vim-javascript'
+        Bundle 'briancollins/vim-jst'
+
+    " CoffeeScritp
+        Bundle 'kchmck/vim-coffee-script'
+
+    " HTML
+        Bundle 'hail2u/vim-css3-syntax'
+
+    " CSS
+        Bundle 'skammer/vim-css-color'
+
+    " Misc
+        Bundle 'tpope/vim-markdown'
+        Bundle 'mattn/zencoding-vim'
+
+    " Twig {
+        Bundle 'beyondwords/vim-twig'
+    " }
+
+    " Jinja2 {
+        Bundle 'jeanmenezes/vim-jinja'
+    " }
+" }
