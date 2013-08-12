@@ -187,11 +187,11 @@
     set guioptions-=T                                 "toolbar icons
 
     if s:is_windows
-      set gfn=Anonymous_Pro:h16,Ubuntu_Mono:h16
+      set gfn=Consolas:h16,Ubuntu_Mono:h16,Anonymous_Pro:h16
     endif
 
     if has('gui_gtk')
-      set gfn=Anonymous\ Pro\ 16,Ubuntu\ Mono\ 16
+      set gfn=DejaVu\ Sans\ Mono\ 14,Ubuntu\ Mono\ 16,Anonymous\ Pro\ 16
     endif
   else
     if $COLORTERM == 'gnome-terminal'
