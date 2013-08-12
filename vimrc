@@ -13,6 +13,7 @@
   let s:settings = {}
   let s:settings.default_indent = 4
   let s:settings.max_column = 120
+  let s:settings.autocomplete_method = 'neocomplcache'
   let s:settings.enable_cursorcolumn = 1
   let s:settings.colorscheme = 'solarized'
 
@@ -186,11 +187,11 @@
     set guioptions-=T                                 "toolbar icons
 
     if s:is_windows
-      set gfn=Ubuntu_Mono:h12
+      set gfn=Ubuntu_Mono:h16
     endif
 
     if has('gui_gtk')
-      set gfn=Ubuntu\ Mono\ 12
+      set gfn=Ubuntu\ Mono\ 16
     endif
   else
     if $COLORTERM == 'gnome-terminal'
@@ -268,6 +269,46 @@
       nnoremap <silent> <leader>gV :Gitv!<CR>
     " }}}
   endif " }}} scm
+  if count(s:settings.plugin_groups, 'autocomplete') "{{{
+    NeoBundle 'honza/vim-snippets'
+    if s:settings.autocomplete_method == 'ycm' "{{{
+      NeoBundle 'Valloric/YouCompleteMe', {'vim_version':'7.3.584'} "{{{
+        let g:ycm_complete_in_comments_and_strings=1
+        let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
+        let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
+        let g:ycm_filetype_blacklist={'unite': 1}
+      "}}}
+      NeoBundle 'SirVer/ultisnips' "{{{
+        let g:UltiSnipsExpandTrigger="<tab>"
+        let g:UltiSnipsJumpForwardTrigger="<tab>"
+        let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+        let g:UltiSnipsSnippetsDir='~/.vim/snippets'
+      "}}}
+    else
+      NeoBundle 'Shougo/neosnippet.vim' "{{{
+        let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets,~/.vim/snippets'
+        let g:neosnippet#enable_snipmate_compatibility=1
+
+        imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
+        smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+        imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
+        smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
+      "}}}
+    endif "}}}
+    if s:settings.autocomplete_method == 'neocomplete' "{{{
+      NeoBundleLazy 'Shougo/neocomplete.vim', {'autoload':{'insert':1}, 'vim_version':'7.3.885'} "{{{
+        let g:neocomplete#enable_at_startup=1
+        let g:neocomplete#data_directory='~/.vim/.cache/neocomplete'
+      "}}}
+    endif "}}}
+    if s:settings.autocomplete_method == 'neocomplcache' "{{{
+      NeoBundleLazy 'Shougo/neocomplcache.vim', {'autoload':{'insert':1}} "{{{
+        let g:neocomplcache_enable_at_startup=1
+        let g:neocomplcache_temporary_dir='~/.vim/.cache/neocomplcache'
+        let g:neocomplcache_enable_fuzzy_completion=1
+      "}}}
+    endif "}}}
+  endif "}}} autocomplete
   if count(s:settings.plugin_groups, 'editing') " {{{
     NeoBundle 'tpope/vim-speeddating'
     NeoBundle 'tomtom/tcomment_vim'
@@ -363,6 +404,70 @@
       nnoremap <silent> <F9> :TagbarToggle<CR>
     "}}}
   endif " }}} navigation
+  if count(s:settings.plugin_groups, 'unite') "{{{
+    NeoBundle 'Shougo/unite.vim' "{{{
+      let bundle = neobundle#get('unite.vim')
+      function! bundle.hooks.on_source(bundle)
+        call unite#filters#matcher_default#use(['matcher_fuzzy'])
+        call unite#filters#sorter_default#use(['sorter_rank'])
+        call unite#set_profile('files', 'smartcase', 1)
+        call unite#custom#source('line,outline','matchers','matcher_fuzzy')
+      endfunction
+
+      let g:unite_data_directory='~/.vim/.cache/unite'
+      let g:unite_enable_start_insert=1
+      let g:unite_source_history_yank_enable=1
+      let g:unite_source_rec_max_cache_files=5000
+      let g:unite_prompt='» '
+
+      if executable('ag')
+        let g:unite_source_grep_command='ag'
+        let g:unite_source_grep_default_opts='--nocolor --nogroup -S -C4'
+        let g:unite_source_grep_recursive_opt=''
+      elseif executable('ack')
+        let g:unite_source_grep_command='ack'
+        let g:unite_source_grep_default_opts='--no-heading --no-color -a -C4'
+        let g:unite_source_grep_recursive_opt=''
+      endif
+
+      function! s:unite_settings()
+        nmap <buffer> Q <plug>(unite_exit)
+        nmap <buffer> <esc> <plug>(unite_exit)
+        imap <buffer> <esc> <plug>(unite_exit)
+      endfunction
+      autocmd FileType unite call s:unite_settings()
+
+      nmap <space> [unite]
+      nnoremap [unite] <nop>
+
+      if s:is_windows
+        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec buffer file_mru bookmark<cr><c-u>
+        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
+      else
+        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec/async buffer file_mru bookmark<cr><c-u>
+        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async<cr><c-u>
+      endif
+      nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
+      nnoremap <silent> [unite]l :<C-u>Unite -auto-resize -buffer-name=line line<cr>
+      nnoremap <silent> [unite]b :<C-u>Unite -auto-resize -buffer-name=buffers buffer<cr>
+      nnoremap <silent> [unite]/ :<C-u>Unite -no-quit -buffer-name=search grep:.<cr>
+      nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<cr>
+      nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<cr>
+    "}}}
+    NeoBundleLazy 'ujihisa/unite-colorscheme', {'autoload':{'unite_sources':'colorscheme'}} "{{{
+      nnoremap <silent> [unite]c :<C-u>Unite -winheight=10 -auto-preview -buffer-name=colorschemes colorscheme<cr>
+    "}}}
+    NeoBundleLazy 'tsukkee/unite-tag', {'autoload':{'unite_sources':['tag','tag/file']}} "{{{
+      nnoremap <silent> [unite]t :<C-u>Unite -auto-resize -buffer-name=tags tags tags/file<cr>
+    "}}}
+    NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}} "{{{
+      nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<cr>
+    "}}}
+    NeoBundleLazy 'Shougo/junkfile.vim', {'autoload':{'commands':'JunkfileOpen','unite_sources':['junkfile','junkfile/new']}} "{{{
+      let g:junkfile#directory=expand("~/.vim/.cache/junk")
+      nnoremap <silent> [unite]j :<C-u>Unite -auto-resize -buffer-name=junk junkfile junkfile/new<cr>
+    "}}}
+  endif " }}} unite
   if count(s:settings.plugin_groups, 'misc') "{{{
     NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
     if executable('redcarpet') && executable('instant-markdown-d')
@@ -385,14 +490,6 @@
     NeoBundleLazy 'mattn/gist-vim', { 'depends': 'mattn/webapi-vim', 'autoload': { 'commands': 'Gist' } } "{{{
       let g:gist_post_private=1
       let g:gist_show_privates=1
-    "}}}
-    NeoBundleLazy 'Shougo/vimshell.vim', {'depends': 'Shougo/vimproc.vim', 'autoload':{'commands':'VimShell'}} "{{{
-      let g:vimshell_editor_command='vim'
-      let g:vimshell_right_prompt='getcwd()'
-      let g:vimshell_temporary_directory='~/.vim/.cache/vimshell'
-      let g:vimshell_vimshrc_path='~/.vim/vimshrc'
-
-      nnoremap <leader>c :VimShell -split<cr>
     "}}}
     NeoBundleLazy 'zhaocai/GoldenView.Vim', {'autoload':{'mappings':['<Plug>ToggleGoldenViewAutoResize']}} "{{{
       let g:goldenview__enable_default_mapping=0
