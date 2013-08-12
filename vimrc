@@ -214,7 +214,7 @@
     NeoBundle 'matchit.zip'
     NeoBundle 'bling/vim-bufferline' " {{{
       let g:bufferline_echo=0
-      let g:bufferline_rotate=1
+      let g:bufferline_rotate=0
     " }}}
     NeoBundle 'bling/vim-airline'
     NeoBundle 'tpope/vim-surround'
@@ -425,7 +425,7 @@
     "}}}
     NeoBundleLazy 'scrooloose/nerdtree', {'autoload':{'commands':['NERDTreeToggle','NERDTreeFind']}} "{{{
       let NERDTreeShowHidden=1
-      let NERDTreeQuitOnOpen=0
+      let NERDTreeQuitOnOpen=1
       let NERDTreeShowLineNumbers=1
       let NERDTreeChDirMode=0
       let NERDTreeShowBookmarks=1
