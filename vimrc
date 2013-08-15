@@ -265,6 +265,7 @@
       nnoremap <silent> <leader>gv :Gitv<CR>
       nnoremap <silent> <leader>gV :Gitv!<CR>
     " }}}
+    NeoBundle 'sjl/splice.vim'
   endif " }}} scm
   if count(s:settings.plugin_groups, 'autocomplete') "{{{
     NeoBundle 'Shougo/neosnippet'
