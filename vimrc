@@ -14,7 +14,6 @@
   let s:settings.default_indent = 4
   let s:settings.max_column = 120
   let s:settings.autocomplete_method = 'neocomplcache'
-  let s:settings.enable_cursorcolumn = 1
   let s:settings.colorscheme = 'solarized'
 
   if exists('g:dotvim_settings.plugin_groups')
@@ -155,7 +154,7 @@
   set relativenumber
   set lazyredraw
   set laststatus=2
-  set noshowmode
+  set showmode                                        " Display the current mode
   set foldenable                                      "enable folds by default
   set foldmethod=syntax                               "fold via syntax of files
   set foldlevelstart=99                               "open all folds by default
@@ -165,11 +164,9 @@
   autocmd WinLeave * setlocal nocursorline
   autocmd WinEnter * setlocal cursorline
   let &colorcolumn=s:settings.max_column
-  if s:settings.enable_cursorcolumn
-    set cursorcolumn
-    autocmd WinLeave * setlocal nocursorcolumn
-    autocmd WinEnter * setlocal cursorcolumn
-  endif
+  set cursorcolumn
+  autocmd WinLeave * setlocal nocursorcolumn
+  autocmd WinEnter * setlocal cursorcolumn
 
   if has('conceal')
     set conceallevel=1
@@ -208,7 +205,7 @@
       let g:bufferline_rotate=0
     " }}}
     NeoBundle 'bling/vim-airline' " {{{
-      let g:airline_theme='jellybeans'
+      let g:airline_theme='tomorrow'
       let g:airline_powerline_fonts=0
       let g:airline_paste_symbol = 'ρ'
     " }}}
@@ -270,6 +267,7 @@
     " }}}
   endif " }}} scm
   if count(s:settings.plugin_groups, 'autocomplete') "{{{
+    NeoBundle 'Shougo/neosnippet'
     NeoBundle 'honza/vim-snippets'
     if s:settings.autocomplete_method == 'ycm' "{{{
       NeoBundle 'Valloric/YouCompleteMe', {'vim_version':'7.3.584'} "{{{
@@ -303,9 +301,87 @@
     endif "}}}
     if s:settings.autocomplete_method == 'neocomplcache' "{{{
       NeoBundleLazy 'Shougo/neocomplcache.vim', {'autoload':{'insert':1}} "{{{
+        let g:acp_enableAtStartup = 0
         let g:neocomplcache_enable_at_startup=1
         let g:neocomplcache_temporary_dir='~/.vim/.cache/neocomplcache'
         let g:neocomplcache_enable_fuzzy_completion=1
+
+        " SuperTab like snippets behavior.
+        imap <silent><expr><TAB> neosnippet#expandable() ?
+                    \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
+                    \ "\<C-e>" : "\<TAB>")
+        smap <TAB> <Right><Plug>(neosnippet_jump_or_expand)
+
+        " Define dictionary.
+        let g:neocomplcache_dictionary_filetype_lists = {
+                    \ 'default' : '',
+                    \ 'vimshell' : $HOME.'/.vimshell_hist',
+                    \ 'scheme' : $HOME.'/.gosh_completions'
+                    \ }
+
+        " Define keyword.
+        if !exists('g:neocomplcache_keyword_patterns')
+            let g:neocomplcache_keyword_patterns = {}
+        endif
+        let g:neocomplcache_keyword_patterns._ = '\h\w*'
+
+        " Plugin key-mappings.
+
+        " These two lines conflict with the default digraph mapping of <C-K>
+        " If you prefer that functionality, add
+        " let g:spf13_no_neosnippet_expand = 1
+        " in your .vimrc.bundles.local file
+
+        if !exists('g:spf13_no_neosnippet_expand')
+            imap <C-k> <Plug>(neosnippet_expand_or_jump)
+            smap <C-k> <Plug>(neosnippet_expand_or_jump)
+        endif
+
+        inoremap <expr><C-g> neocomplcache#undo_completion()
+        inoremap <expr><C-l> neocomplcache#complete_common_string()
+        inoremap <expr><CR> neocomplcache#complete_common_string()
+
+        " <TAB>: completion.
+        inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+        inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+
+        " <CR>: close popup
+        " <s-CR>: close popup and save indent.
+        inoremap <expr><s-CR> pumvisible() ? neocomplcache#close_popup()"\<CR>" : "\<CR>"
+        inoremap <expr><CR> pumvisible() ? neocomplcache#close_popup() : "\<CR>"
+
+        " <C-h>, <BS>: close popup and delete backword char.
+        inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+        inoremap <expr><C-y> neocomplcache#close_popup()
+
+        " Enable omni completion.
+        autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+        autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+        autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+        autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+        " Enable heavy omni completion.
+        if !exists('g:neocomplcache_omni_patterns')
+            let g:neocomplcache_omni_patterns = {}
+        endif
+        let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+
+        " Use honza's snippets.
+        let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
+
+        " Enable neosnippet snipmate compatibility mode
+        let g:neosnippet#enable_snipmate_compatibility = 1
+
+        " For snippet_complete marker.
+        if has('conceal')
+            set conceallevel=2 concealcursor=i
+        endif
+
+        " Disable the neosnippet preview candidate window
+        " When enabled, there can be too much visual noise
+        " especially when splits are used.
+        set completeopt-=preview
       "}}}
     endif "}}}
   endif "}}} autocomplete
@@ -314,7 +390,6 @@
     NeoBundle 'tomtom/tcomment_vim'
     NeoBundle 'terryma/vim-multiple-cursors'
     NeoBundle 'chrisbra/NrrwRgn'
-    NeoBundle 'dahu/vim-fanfingtastic'
     NeoBundleLazy 'godlygeek/tabular', {'autoload':{'commands':'Tabularize'}} "{{{
       nmap <Leader>a& :Tabularize /&<CR>
       vmap <Leader>a& :Tabularize /&<CR>
@@ -329,6 +404,9 @@
       nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
       vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
     "}}}
+    NeoBundle 'jiangmiao/auto-pairs' " {{{
+      let g:AutoPairsFlyMode = 1
+    " }}}
     NeoBundle 'skwp/vim-easymotion' "{{{
       let g:EasyMotion_keys = 'asdfghjklqwertyuiopzxcvbnm'
       autocmd ColorScheme * highlight EasyMotionTarget ctermfg=32 guifg=#0087df
@@ -340,22 +418,8 @@
   endif " }}} visual
   if count(s:settings.plugin_groups, 'indents') "{{{
     NeoBundle 'Yggdroot/indentLine' "{{{
-      let g:indentLine_char = '┊'
+      let g:indentLine_char = '¦'
       let g:indentLine_color_term=236
-    "}}}
-    NeoBundle 'nathanaelkane/vim-indent-guides' "{{{
-      let g:indent_guides_start_level=1
-      let g:indent_guides_guide_size=1
-      let g:indent_guides_enable_on_vim_startup=0
-      let g:indent_guides_color_change_percent=3
-      if !has('gui_running')
-        let g:indent_guides_auto_colors=0
-        function! s:indent_set_console_colors()
-          hi IndentGuidesOdd ctermbg=235
-          hi IndentGuidesEven ctermbg=236
-        endfunction
-        autocmd VimEnter,Colorscheme * call s:indent_set_console_colors()
-      endif
     "}}}
   endif " }}} indents
   if count(s:settings.plugin_groups, 'navigation') "{{{
@@ -395,7 +459,7 @@
       let NERDTreeShowLineNumbers=1
       let NERDTreeChDirMode=0
       let NERDTreeShowBookmarks=1
-      let NERDTreeIgnore=['\.git','\.hg']
+      let NERDTreeIgnore=['\.git','\.hg','.pyc']
       let NERDTreeBookmarksFile='~/.vim/.cache/NERDTreeBookmarks'
       nnoremap <F2> :NERDTreeToggle<CR>
       nnoremap <F3> :NERDTreeFind<CR>
@@ -404,78 +468,9 @@
       nnoremap <silent> <F9> :TagbarToggle<CR>
     "}}}
   endif " }}} navigation
-  if count(s:settings.plugin_groups, 'unite') "{{{
-    NeoBundle 'Shougo/unite.vim' "{{{
-      let bundle = neobundle#get('unite.vim')
-      function! bundle.hooks.on_source(bundle)
-        call unite#filters#matcher_default#use(['matcher_fuzzy'])
-        call unite#filters#sorter_default#use(['sorter_rank'])
-        call unite#set_profile('files', 'smartcase', 1)
-        call unite#custom#source('line,outline','matchers','matcher_fuzzy')
-      endfunction
-
-      let g:unite_data_directory='~/.vim/.cache/unite'
-      let g:unite_enable_start_insert=1
-      let g:unite_source_history_yank_enable=1
-      let g:unite_source_rec_max_cache_files=5000
-      let g:unite_prompt='» '
-
-      if executable('ag')
-        let g:unite_source_grep_command='ag'
-        let g:unite_source_grep_default_opts='--nocolor --nogroup -S -C4'
-        let g:unite_source_grep_recursive_opt=''
-      elseif executable('ack')
-        let g:unite_source_grep_command='ack'
-        let g:unite_source_grep_default_opts='--no-heading --no-color -a -C4'
-        let g:unite_source_grep_recursive_opt=''
-      endif
-
-      function! s:unite_settings()
-        nmap <buffer> Q <plug>(unite_exit)
-        nmap <buffer> <esc> <plug>(unite_exit)
-        imap <buffer> <esc> <plug>(unite_exit)
-      endfunction
-      autocmd FileType unite call s:unite_settings()
-
-      nmap <space> [unite]
-      nnoremap [unite] <nop>
-
-      if s:is_windows
-        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec buffer file_mru bookmark<cr><c-u>
-        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
-      else
-        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec/async buffer file_mru bookmark<cr><c-u>
-        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async<cr><c-u>
-      endif
-      nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
-      nnoremap <silent> [unite]l :<C-u>Unite -auto-resize -buffer-name=line line<cr>
-      nnoremap <silent> [unite]b :<C-u>Unite -auto-resize -buffer-name=buffers buffer<cr>
-      nnoremap <silent> [unite]/ :<C-u>Unite -no-quit -buffer-name=search grep:.<cr>
-      nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<cr>
-      nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<cr>
-    "}}}
-    NeoBundleLazy 'ujihisa/unite-colorscheme', {'autoload':{'unite_sources':'colorscheme'}} "{{{
-      nnoremap <silent> [unite]c :<C-u>Unite -winheight=10 -auto-preview -buffer-name=colorschemes colorscheme<cr>
-    "}}}
-    NeoBundleLazy 'tsukkee/unite-tag', {'autoload':{'unite_sources':['tag','tag/file']}} "{{{
-      nnoremap <silent> [unite]t :<C-u>Unite -auto-resize -buffer-name=tags tags tags/file<cr>
-    "}}}
-    NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}} "{{{
-      nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<cr>
-    "}}}
-    NeoBundleLazy 'Shougo/junkfile.vim', {'autoload':{'commands':'JunkfileOpen','unite_sources':['junkfile','junkfile/new']}} "{{{
-      let g:junkfile#directory=expand("~/.vim/.cache/junk")
-      nnoremap <silent> [unite]j :<C-u>Unite -auto-resize -buffer-name=junk junkfile junkfile/new<cr>
-    "}}}
-  endif " }}} unite
   if count(s:settings.plugin_groups, 'misc') "{{{
     NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
-    if executable('redcarpet') && executable('instant-markdown-d')
-      NeoBundleLazy 'suan/vim-instant-markdown', {'autoload':{'filetypes':['markdown']}}
-    endif
     NeoBundleLazy 'guns/xterm-color-table.vim', {'autoload':{'commands':'XtermColorTable'}}
-    NeoBundle 'vimwiki'
-    NeoBundle 'bufkill.vim'
     NeoBundle 'mhinz/vim-startify' "{{{
       let g:startify_session_dir = '~/.vim/.cache/sessions'
       let g:startify_show_sessions = 1
@@ -499,6 +494,10 @@
 " }}} plugin/mapping configuration
 
 " mapping {{{
+  let maplocalleader = '-'
+
+  nmap <silent> <leader>fs :syn sync fromstart<CR>
+
   " formatting shortcuts
   vmap <leader>s :sort<cr>
 
@@ -523,10 +522,6 @@
   inoremap <C-h> <left>
   inoremap <C-l> <right>
 
-  if mapcheck('<space>/') == ''
-    nnoremap <space>/ :vimgrep //gj **/*<left><left><left><left><left><left><left><left>
-  endif
-
   " sane regex {{{
     nnoremap / /\v
     vnoremap / /\v
@@ -546,7 +541,7 @@
   nnoremap <silent> j gj
   nnoremap <silent> k gk
 
-  " auto center {{{
+  " auto center after search {{{
     nnoremap <silent> n nzz
     nnoremap <silent> N Nzz
     nnoremap <silent> * *zz
@@ -613,8 +608,13 @@
 
 " color schemes {{{
   NeoBundle 'altercation/vim-colors-solarized'
-  NeoBundle 'w0ng/vim-hybrid'
+  NeoBundle 'chriskempson/base16-vim'
+  NeoBundle 'chriskempson/vim-tomorrow-theme'
+  NeoBundle 'jelera/vim-gummybears-colorscheme'
   NeoBundle 'nanotech/jellybeans.vim'
+  NeoBundle 'sjl/badwolf'
+  NeoBundle 'tomasr/molokai'
+  NeoBundle 'w0ng/vim-hybrid'
   NeoBundle 'zeis/vim-kolor' "{{{
     let g:kolor_underlined=1
   "}}}
