@@ -206,6 +206,9 @@
     " }}}
     NeoBundle 'bling/vim-airline' " {{{
       let g:airline_theme='tomorrow'
+      if has("gui_running")
+        let g:airline_theme='simple'
+      endif
       let g:airline_powerline_fonts=0
       let g:airline_paste_symbol = 'ρ'
     " }}}
@@ -609,18 +612,19 @@
 
 " color schemes {{{
   NeoBundle 'altercation/vim-colors-solarized'
-  NeoBundle 'chriskempson/base16-vim'
   NeoBundle 'chriskempson/vim-tomorrow-theme'
-  NeoBundle 'jelera/vim-gummybears-colorscheme'
   NeoBundle 'nanotech/jellybeans.vim'
-  NeoBundle 'sjl/badwolf'
   NeoBundle 'tomasr/molokai'
-  NeoBundle 'w0ng/vim-hybrid'
+  NeoBundle 'tpope/vim-vividchalk'
   NeoBundle 'zeis/vim-kolor' "{{{
     let g:kolor_underlined=1
   "}}}
 
-  exec 'colorscheme '.s:settings.colorscheme
+  if has("gui_running")
+    colorscheme Tomorrow-Night
+  else
+    colorscheme desert
+  endif
 " color schemes }}}
 
 " finish loading {{{
