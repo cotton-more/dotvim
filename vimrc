@@ -242,6 +242,7 @@
   if count(s:settings.plugin_groups, 'python') " {{{
     NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}} " {{{
       let g:pymode_rope=0
+      let g:pymode_lint = 0
     " }}}
     NeoBundleLazy 'davidhalter/jedi-vim', {'autoload':{'filetypes':['python']}} " {{{
       let g:jedi#popup_on_dot=0
@@ -481,10 +482,14 @@
       nnoremap <F1> :Startify<cr>
     "}}}
     NeoBundle 'scrooloose/syntastic' "{{{
-      let g:syntastic_error_symbol = '✗'
-      let g:syntastic_style_error_symbol = '✠'
-      let g:syntastic_warning_symbol = '∆'
-      let g:syntastic_style_warning_symbol = '≈'
+      let g:syntastic_python_checkers=['pep8', 'python']
+      let g:syntastic_error_symbol='✗'
+      let g:syntastic_style_error_symbol='✠'
+      let g:syntastic_warning_symbol='∆'
+      let g:syntastic_style_warning_symbol='≈'
+      let g:syntastic_check_on_open=1
+      let g:syntastic_aggregate_errors=1
+      let g:syntastic_auto_loc_list=0
     "}}}
     NeoBundleLazy 'mattn/gist-vim', { 'depends': 'mattn/webapi-vim', 'autoload': { 'commands': 'Gist' } } "{{{
       let g:gist_post_private=1
