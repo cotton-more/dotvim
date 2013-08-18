@@ -183,12 +183,9 @@
     set guioptions+=t                                 "tear off menu items
     set guioptions-=T                                 "toolbar icons
 
+    set gfn=DejaVu\ Sans\ Mono\ 14,Ubuntu\ Mono\ 16,Anonymous\ Pro\ 16
     if s:is_windows
       set gfn=Consolas:h16,Ubuntu_Mono:h16,Anonymous_Pro:h16
-    endif
-
-    if has('gui_gtk')
-      set gfn=DejaVu\ Sans\ Mono\ 14,Ubuntu\ Mono\ 16,Anonymous\ Pro\ 16
     endif
   else
     if $COLORTERM == 'gnome-terminal'
@@ -209,7 +206,10 @@
       if has("gui_running")
         let g:airline_theme='simple'
       endif
-      let g:airline_powerline_fonts=0
+      let g:airline_left_sep = '»'
+      let g:airline_right_sep = '«'
+      let g:airline_linecolumn_prefix = '␤ '
+      let g:airline_branch_prefix = '⎇ '
       let g:airline_paste_symbol = 'ρ'
     " }}}
     NeoBundle 'tpope/vim-surround'
@@ -447,6 +447,7 @@
       let g:ctrlp_working_path_mode=0
       let g:ctrlp_max_files=20000
       let g:ctrlp_cache_dir='~/.vim/.cache/ctrlp'
+      let g:ctrlp_reuse_window='startify'
       let g:ctrlp_extensions=['funky']
 
       nmap \ [ctrlp]
