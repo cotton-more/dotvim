@@ -97,6 +97,7 @@
   let &shiftwidth=s:settings.default_indent           "number of spaces when indenting
   set list                                            "highlight whitespace
   set listchars=tab:│\ ,trail:•,extends:…,precedes:<
+  set fillchars=vert:\|
   set shiftround
   set linebreak
   let &showbreak='↪ '
@@ -202,10 +203,7 @@
       let g:bufferline_rotate=0
     " }}}
     NeoBundle 'bling/vim-airline' " {{{
-      let g:airline_theme='tomorrow'
-      if has("gui_running")
-        let g:airline_theme='simple'
-      endif
+      let g:airline_theme='solarized'
       let g:airline_left_sep = '»'
       let g:airline_right_sep = '«'
       let g:airline_linecolumn_prefix = '␤ '
@@ -251,6 +249,7 @@
   if count(s:settings.plugin_groups, 'scm') " {{{
     NeoBundle 'mhinz/vim-signify' "{{{
       let g:signify_update_on_bufenter=0
+      let g:signify_update_on_focusgained=0
     " }}}
     NeoBundle 'bitbucket:ludovicchabant/vim-lawrencium'
     NeoBundle 'tpope/vim-fugitive' " {{{
@@ -504,9 +503,22 @@
 " }}} plugin/mapping configuration
 
 " mapping {{{
-  let maplocalleader = '-'
+  let mapleader = ","
+  let g:mapleader = ","
+  let maplocalleader = ","
+  let g:maplocalleader = ","
 
-  nmap <silent> <leader>fs :syn sync fromstart<CR>
+  " <Leader>o: only
+  nnoremap <Leader>o :only<cr>
+
+  " Go to previous buffer
+  nnoremap <Leader># :b#<CR>
+
+  " <Leader>d: Delete the current buffer
+  nnoremap <Leader>d :bdelete<CR>
+
+  " redraw syntax
+  nmap <silent> <leader>fs :syntax sync fromstart<cr>
 
   " formatting shortcuts
   vmap <leader>s :sort<cr>
@@ -582,6 +594,11 @@
     nnoremap <C-j> <C-w>j
     nnoremap <C-k> <C-w>k
     nnoremap <C-l> <C-w>l
+
+    " _ : Quick horizontal splits
+    nnoremap _ :sp<cr>
+    " | : Quick vertical splits
+    nnoremap <bar> :vsp<cr>
   "}}}
 
   " tab shortcuts
@@ -622,14 +639,15 @@
   NeoBundle 'nanotech/jellybeans.vim'
   NeoBundle 'tomasr/molokai'
   NeoBundle 'tpope/vim-vividchalk'
+  NeoBundle 'twerth/ir_black'
   NeoBundle 'zeis/vim-kolor' "{{{
     let g:kolor_underlined=1
   "}}}
 
-  if has("gui_running")
-    colorscheme Tomorrow-Night
-  else
-    colorscheme desert
+  colorscheme solarized
+  set background=light
+  if !has("gui_running")
+    set background=dark
   endif
 " color schemes }}}
 
