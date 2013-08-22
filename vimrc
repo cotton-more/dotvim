@@ -184,9 +184,9 @@
     set guioptions+=t                                 "tear off menu items
     set guioptions-=T                                 "toolbar icons
 
-    set gfn=DejaVu\ Sans\ Mono\ 14,Ubuntu\ Mono\ 16,Anonymous\ Pro\ 16
+    set gfn=Inconsolata\ LGC\ Medium\ 14,DejaVu\ Sans\ Mono\ 14,Ubuntu\ Mono\ 16,Anonymous\ Pro\ 16
     if s:is_windows
-      set gfn=Consolas:h16,Ubuntu_Mono:h16,Anonymous_Pro:h16
+      set gfn=Inconsolata_LGC_Medium:h14,Consolas:h16,DejaVu_Sans_Mono:h14,Ubuntu_Mono:h16,Anonymous_Pro:h16
     endif
   else
     if $COLORTERM == 'gnome-terminal'
