@@ -169,6 +169,9 @@
   autocmd WinLeave * setlocal nocursorcolumn
   autocmd WinEnter * setlocal cursorcolumn
 
+  highlight clear LineNr          " Current line number row will have same background color in relative mode.
+                                  " Things like vim-gitgutter will match LineNr highlight
+
   if has('conceal')
     set conceallevel=1
     set listchars+=conceal:Δ
@@ -183,6 +186,8 @@
 
     set guioptions+=t                                 "tear off menu items
     set guioptions-=T                                 "toolbar icons
+    set guioptions-=r " remove righthand scrollbar
+    set guioptions-=l " remove lefthand scrollbar
 
     set gfn=Inconsolata\ LGC\ Medium\ 14,DejaVu\ Sans\ Mono\ 14,Ubuntu\ Mono\ 16,Anonymous\ Pro\ 16
     if s:is_windows
