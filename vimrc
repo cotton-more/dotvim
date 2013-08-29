@@ -203,10 +203,6 @@
 " plugin/mapping configuration {{{
   if count(s:settings.plugin_groups, 'core') " {{{
     NeoBundle 'matchit.zip'
-    NeoBundle 'bling/vim-bufferline' " {{{
-      let g:bufferline_echo=0
-      let g:bufferline_rotate=0
-    " }}}
     NeoBundle 'bling/vim-airline' " {{{
       let g:airline_theme='solarized'
       let g:airline_left_sep = '›'
