@@ -107,7 +107,8 @@
   set scrolljump=5                                    "minimum number of lines to scroll
   set display+=lastline
   set wildmenu                                        "show list for autocomplete
-  set wildmode=list:longest:full                      "priority for tab completion
+  set wildmode=list:full
+  set wildignorecase
   set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store
 
   set splitbelow
@@ -248,10 +249,9 @@
     " }}}
   endif " }}} python
   if count(s:settings.plugin_groups, 'scm') " {{{
-    NeoBundle 'mhinz/vim-signify' "{{{
-      let g:signify_update_on_bufenter=0
-      let g:signify_update_on_focusgained=0
-    " }}}
+    NeoBundle 'airblade/vim-gitgutter' {{{
+      let g:gitgutter_realtime = 0
+    }}}
     NeoBundle 'bitbucket:ludovicchabant/vim-lawrencium'
     NeoBundle 'tpope/vim-fugitive' " {{{
       nnoremap <silent> <leader>gs :Gstatus<CR>
@@ -545,6 +545,8 @@
   inoremap <C-h> <left>
   inoremap <C-l> <right>
 
+  inoremap <C-u> <C-g>u<C-u>
+
   " sane regex {{{
     nnoremap / /\v
     vnoremap / /\v
@@ -617,7 +619,7 @@
 
   " general
   nmap <leader>l :set list! list?<cr>
-  nnoremap <cr> :set hlsearch! hlsearch?<cr>
+  nnoremap <BS> :set hlsearch! hlsearch?<cr>
 " }}} mapping
 
 " autocmd {{{
