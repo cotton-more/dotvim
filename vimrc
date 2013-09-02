@@ -249,9 +249,10 @@
     " }}}
   endif " }}} python
   if count(s:settings.plugin_groups, 'scm') " {{{
-    NeoBundle 'airblade/vim-gitgutter' {{{
-      let g:gitgutter_realtime = 0
-    }}}
+    NeoBundle 'mhinz/vim-signify' "{{{
+        let g:signify_update_on_bufenter=0
+        let g:signify_update_on_focusgained=0
+    " }}}
     NeoBundle 'bitbucket:ludovicchabant/vim-lawrencium'
     NeoBundle 'tpope/vim-fugitive' " {{{
       nnoremap <silent> <leader>gs :Gstatus<CR>
