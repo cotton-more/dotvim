@@ -223,6 +223,7 @@
       vmap <c-up> [egv
       vmap <c-down> ]egv
     " }}}
+    NeoBundle 'SyntaxComplete'
   endif " }}} core
   if count(s:settings.plugin_groups, 'web') " {{{
     NeoBundleLazy 'groenewege/vim-less', {'autoload':{'filetypes':['less']}}
@@ -240,7 +241,9 @@
     NeoBundleLazy 'kchmck/vim-coffee-script', {'autoload':{'filetypes':['coffee']}}
     NeoBundleLazy 'mmalecki/vim-node.js', {'autoload':{'filetypes':['javascript']}}
     NeoBundleLazy 'leshill/vim-json', {'autoload':{'filetypes':['javascript','json']}}
-    NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee']}}
+    NeoBundleLazy 'othree/javascript-libraries-syntax.vim', {'autoload':{'filetypes':['javascript','coffee']}} " {{{
+      let g:used_javascript_libs = 'jquery,angularjs'
+    " }}}
   endif " }}} javascript
   if count(s:settings.plugin_groups, 'python') " {{{
     NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}} " {{{
