@@ -206,6 +206,9 @@
     NeoBundle 'matchit.zip'
     NeoBundle 'bling/vim-airline' " {{{
       let g:airline_theme='solarized'
+      if !has("gui_running")
+        let g:airline_theme='tomorrow'
+      endif
       let g:airline_left_sep = '›'
       let g:airline_right_sep = '‹'
       let g:airline_linecolumn_prefix = '␤ '
@@ -651,6 +654,7 @@
   colorscheme solarized
   set background=light
   if !has("gui_running")
+    colorscheme Tomorrow-Night
     set background=dark
   endif
 " color schemes }}}
