@@ -627,6 +627,10 @@
   " general
   nmap <leader>l :set list! list?<cr>
   nnoremap <BS> :set hlsearch! hlsearch?<cr>
+
+  " Control-s to save
+  nnoremap <C-s> :w<CR>
+  inoremap <C-s> <C-o>:w<CR>
 " }}} mapping
 
 " autocmd {{{
@@ -646,13 +650,6 @@
 " color schemes {{{
   NeoBundle 'altercation/vim-colors-solarized'
   NeoBundle 'chriskempson/vim-tomorrow-theme'
-  NeoBundle 'nanotech/jellybeans.vim'
-  NeoBundle 'tomasr/molokai'
-  NeoBundle 'tpope/vim-vividchalk'
-  NeoBundle 'twerth/ir_black'
-  NeoBundle 'zeis/vim-kolor' "{{{
-    let g:kolor_underlined=1
-  "}}}
 
   colorscheme solarized
   set background=light

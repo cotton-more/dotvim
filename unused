@@ -1,3 +1,12 @@
-    NeoBundle 'airblade/vim-gitgutter' " {{{
-      let g:gitgutter_realtime = 0
-    " }}}
+NeoBundle 'airblade/vim-gitgutter' " {{{
+    let g:gitgutter_realtime = 0
+" }}}
+
+
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'tomasr/molokai'
+NeoBundle 'tpope/vim-vividchalk'
+NeoBundle 'twerth/ir_black'
+NeoBundle 'zeis/vim-kolor' "{{{
+    let g:kolor_underlined=1
+"}}}
