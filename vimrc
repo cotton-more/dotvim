@@ -456,6 +456,9 @@
       let g:ctrlp_cache_dir='~/.vim/.cache/ctrlp'
       let g:ctrlp_reuse_window='startify'
       let g:ctrlp_extensions=['funky']
+      let g:ctrlp_custom_ignore = {
+            \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+            \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
 
       nmap \ [ctrlp]
       nnoremap [ctrlp] <nop>
