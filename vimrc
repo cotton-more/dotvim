@@ -214,6 +214,9 @@
       let g:airline_linecolumn_prefix = '␤ '
       let g:airline_branch_prefix = '⎇ '
       let g:airline_paste_symbol = 'ρ'
+      let g:airline#extensions#tabline#enabled = 1
+      let g:airline#extensions#tabline#left_sep=''
+      let g:airline#extensions#tabline#left_alt_sep=''
     " }}}
     NeoBundle 'tpope/vim-surround'
     NeoBundle 'tpope/vim-repeat'
@@ -484,6 +487,70 @@
       nnoremap <silent> <F9> :TagbarToggle<CR>
     "}}}
   endif " }}} navigation
+  if count(s:settings.plugin_groups, 'unite') "{{{
+    NeoBundle 'Shougo/unite.vim' "{{{
+      let bundle = neobundle#get('unite.vim')
+      function! bundle.hooks.on_source(bundle)
+        call unite#filters#matcher_default#use(['matcher_fuzzy'])
+        call unite#filters#sorter_default#use(['sorter_rank'])
+        call unite#set_profile('files', 'smartcase', 1)
+        call unite#custom#source('line,outline','matchers','matcher_fuzzy')
+      endfunction
+
+      let g:unite_data_directory='~/.vim/.cache/unite'
+      let g:unite_enable_start_insert=1
+      let g:unite_source_history_yank_enable=1
+      let g:unite_source_rec_max_cache_files=5000
+      let g:unite_prompt='» '
+
+      if executable('ag')
+        let g:unite_source_grep_command='ag'
+        let g:unite_source_grep_default_opts='--nocolor --nogroup -S -C4'
+        let g:unite_source_grep_recursive_opt=''
+      elseif executable('ack')
+        let g:unite_source_grep_command='ack'
+        let g:unite_source_grep_default_opts='--no-heading --no-color -a -C4'
+        let g:unite_source_grep_recursive_opt=''
+      endif
+
+      function! s:unite_settings()
+        nmap <buffer> Q <plug>(unite_exit)
+        nmap <buffer> <esc> <plug>(unite_exit)
+        imap <buffer> <esc> <plug>(unite_exit)
+      endfunction
+      autocmd FileType unite call s:unite_settings()
+
+      nmap <space> [unite]
+      nnoremap [unite] <nop>
+
+      if s:is_windows
+        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec buffer file_mru bookmark<cr><c-u>
+        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec<cr><c-u>
+      else
+        nnoremap <silent> [unite]<space> :<C-u>Unite -toggle -auto-resize -buffer-name=mixed file_rec/async buffer file_mru bookmark<cr><c-u>
+        nnoremap <silent> [unite]f :<C-u>Unite -toggle -auto-resize -buffer-name=files file_rec/async<cr><c-u>
+      endif
+      nnoremap <silent> [unite]y :<C-u>Unite -buffer-name=yanks history/yank<cr>
+      nnoremap <silent> [unite]l :<C-u>Unite -auto-resize -buffer-name=line line<cr>
+      nnoremap <silent> [unite]b :<C-u>Unite -auto-resize -buffer-name=buffers buffer<cr>
+      nnoremap <silent> [unite]/ :<C-u>Unite -no-quit -buffer-name=search grep:.<cr>
+      nnoremap <silent> [unite]m :<C-u>Unite -auto-resize -buffer-name=mappings mapping<cr>
+      nnoremap <silent> [unite]s :<C-u>Unite -quick-match buffer<cr>
+    "}}}
+    NeoBundleLazy 'tsukkee/unite-tag', {'autoload':{'unite_sources':['tag','tag/file']}} "{{{
+      nnoremap <silent> [unite]t :<C-u>Unite -auto-resize -buffer-name=tags tags tags/file<cr>
+    "}}}
+    NeoBundleLazy 'Shougo/unite-outline', {'autoload':{'unite_sources':'outline'}} "{{{
+      nnoremap <silent> [unite]o :<C-u>Unite -auto-resize -buffer-name=outline outline<cr>
+    "}}}
+    NeoBundleLazy 'Shougo/unite-help', {'autoload':{'unite_sources':'help'}} "{{{
+      nnoremap <silent> [unite]h :<C-u>Unite -auto-resize -buffer-name=help help<cr>
+    "}}}
+    NeoBundleLazy 'Shougo/junkfile.vim', {'autoload':{'commands':'JunkfileOpen','unite_sources':['junkfile','junkfile/new']}} "{{{
+      let g:junkfile#directory=expand("~/.vim/.cache/junk")
+      nnoremap <silent> [unite]j :<C-u>Unite -auto-resize -buffer-name=junk junkfile junkfile/new<cr>
+    "}}}
+  endif "}}}
   if count(s:settings.plugin_groups, 'misc') "{{{
     NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
     NeoBundleLazy 'guns/xterm-color-table.vim', {'autoload':{'commands':'XtermColorTable'}}
@@ -651,7 +718,10 @@
 " autocmd }}}
 
 " color schemes {{{
-  NeoBundle 'altercation/vim-colors-solarized'
+  NeoBundle 'altercation/vim-colors-solarized' " {{{
+    let g:solarized_termcolors=256
+    let g:solarized_termtrans=1
+  " }}}
   NeoBundle 'chriskempson/vim-tomorrow-theme'
 
   colorscheme solarized
