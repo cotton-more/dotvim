@@ -10,3 +10,10 @@ NeoBundle 'twerth/ir_black'
 NeoBundle 'zeis/vim-kolor' "{{{
     let g:kolor_underlined=1
 "}}}
+
+NeoBundle 'kshenoy/vim-signature'
+
+NeoBundle 'Yggdroot/indentLine' "{{{
+    let g:indentLine_char = '¦'
+    let g:indentLine_color_term=236
+"}}}

@@ -214,6 +214,9 @@
       let g:airline_linecolumn_prefix = '␤ '
       let g:airline_branch_prefix = '⎇ '
       let g:airline_paste_symbol = 'ρ'
+      let g:airline#extensions#tabline#enabled = 1
+      let g:airline#extensions#tabline#left_sep=' '
+      let g:airline#extensions#tabline#left_alt_sep='¦'
     " }}}
     NeoBundle 'tpope/vim-surround'
     NeoBundle 'tpope/vim-repeat'
@@ -425,14 +428,21 @@
       autocmd ColorScheme * highlight EasyMotionShade ctermfg=237 guifg=#3a3a3a
     "}}}
   endif " }}} editing
-  if count(s:settings.plugin_groups, 'visual') " {{{
-    NeoBundle 'kshenoy/vim-signature'
-  endif " }}} visual
   if count(s:settings.plugin_groups, 'indents') "{{{
-    NeoBundle 'Yggdroot/indentLine' "{{{
-      let g:indentLine_char = '¦'
-      let g:indentLine_color_term=236
-    "}}}
+    NeoBundle 'nathanaelkane/vim-indent-guides' " {{{
+      let g:indent_guides_start_level=1
+      let g:indent_guides_guide_size=1
+      let g:indent_guides_enable_on_vim_startup=0
+      let g:indent_guides_color_change_percent=3
+      if !has('gui_running')
+        let g:indent_guides_auto_colors=0
+        function! s:indent_set_console_colors()
+          hi IndentGuidesOdd ctermbg=235
+          hi IndentGuidesEven ctermbg=236
+        endfunction
+        autocmd VimEnter,Colorscheme * call s:indent_set_console_colors()
+      endif
+    " }}}
   endif " }}} indents
   if count(s:settings.plugin_groups, 'navigation') "{{{
     NeoBundleLazy 'mbbill/undotree', {'autoload':{'commands':'UndotreeToggle'}} "{{{
@@ -651,7 +661,10 @@
 " autocmd }}}
 
 " color schemes {{{
-  NeoBundle 'altercation/vim-colors-solarized'
+  NeoBundle 'altercation/vim-colors-solarized' " {{{
+    let g:solarized_termcolors=256
+    let g:solarized_termtrans=1
+  " }}}
   NeoBundle 'chriskempson/vim-tomorrow-theme'
 
   colorscheme solarized
