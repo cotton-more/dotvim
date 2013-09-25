@@ -188,7 +188,9 @@
     set guioptions+=t                                 "tear off menu items
     set guioptions-=T                                 "toolbar icons
     set guioptions-=r " remove righthand scrollbar
+    set guioptions-=R
     set guioptions-=l " remove lefthand scrollbar
+    set guioptions-=L
 
     set gfn=Inconsolata\ LGC\ Medium\ 14,DejaVu\ Sans\ Mono\ 14,Ubuntu\ Mono\ 16,Anonymous\ Pro\ 16
     if s:is_windows
