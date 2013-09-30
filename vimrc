@@ -208,9 +208,6 @@
     NeoBundle 'matchit.zip'
     NeoBundle 'bling/vim-airline' " {{{
       let g:airline_theme='solarized'
-      if !has("gui_running")
-        let g:airline_theme='tomorrow'
-      endif
       let g:airline_left_sep = '›'
       let g:airline_right_sep = '‹'
       let g:airline_linecolumn_prefix = '␤ '
@@ -733,13 +730,12 @@
     let g:solarized_termtrans=1
   " }}}
   NeoBundle 'chriskempson/vim-tomorrow-theme'
+  NeoBundle 'baskerville/bubblegum'
+  NeoBundle 'Pychimp/vim-luna'
+  NeoBundle 'tomasr/molokai'
 
   colorscheme solarized
-  set background=light
-  if !has("gui_running")
-    colorscheme Tomorrow-Night
-    set background=dark
-  endif
+  set background=dark
 " color schemes }}}
 
 " finish loading {{{
