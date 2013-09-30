@@ -734,7 +734,11 @@
   NeoBundle 'Pychimp/vim-luna'
   NeoBundle 'tomasr/molokai'
 
-  colorscheme solarized
+  if has("gui_running")
+    colorscheme solarized
+  else
+    colorscheme Tomorrow-Night
+  endif
   set background=dark
 " color schemes }}}
 
