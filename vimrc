@@ -234,6 +234,9 @@
     NeoBundleLazy 'juvenn/mustache.vim', {'autoload':{'filetypes':['mustache']}}
     NeoBundleLazy 'gregsexton/MatchTag', {'autoload':{'filetypes':['html','xml']}}
     NeoBundleLazy 'mattn/emmet-vim', {'autoload':{'filetypes':['html','xml','xsl','xslt','xsd','css','sass','scss','less','mustache']}}
+    NeoBundleLazy 'beyondwords/vim-twig', {'autoload':{'filetypes':['twig','html']}} " {{{
+      autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
+    " }}}
   endif " }}} web
   if count(s:settings.plugin_groups, 'javascript') " {{{
     NeoBundleLazy 'pangloss/vim-javascript', {'autoload':{'filetypes':['javascript']}}
