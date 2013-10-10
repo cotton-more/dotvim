@@ -212,7 +212,7 @@
       let g:airline_linecolumn_prefix = '␤'
       let g:airline_branch_prefix = '⎇ '
       let g:airline_paste_symbol = 'ρ'
-      let g:airline_theme='powerlineish'
+      let g:airline_theme='tomorrow'
       let g:airline#extensions#tabline#left_sep=' '
       let g:airline#extensions#tabline#left_alt_sep='¦'
       let g:airline#extensions#tabline#enabled = 1
@@ -737,11 +737,12 @@
   NeoBundle 'tomasr/molokai'
 
   if has("gui_running")
-    colorscheme solarized
+    colorscheme Tomorrow
+    " set background=light
   else
     colorscheme Tomorrow-Night
+    set background=dark
   endif
-  set background=dark
 " color schemes }}}
 
 " finish loading {{{
