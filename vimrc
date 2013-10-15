@@ -614,14 +614,10 @@
   map <F6> :set invpaste<CR>:set paste?<CR>
 
   " remap arrow keys
-  noremap <up>    :echom 'USE K TO GO UP'<CR>
-  noremap <down>  :echom 'USE J TO GO DOWN'<CR>
-  noremap <left>  :echom 'USE H TO GO LEFT'<CR>
-  noremap <right> :echom 'USE L TO GO RIGHT'<CR>
-  inoremap <up>    <ESC>:echom 'USE K TO GO UP'<CR>
-  inoremap <down>  <ESC>:echom 'USE J TO GO DOWN'<CR>
-  inoremap <right> <ESC>:echom 'USE L TO GO RIGHT'<CR>
-  inoremap <left>  <ESC>:echom 'USE H TO GO LEFT'<CR>
+  noremap <Up> <nop>
+  noremap <Down> <nop>
+  noremap <Left> <nop>
+  noremap <Right> <nop>
 
   " smash escape
   inoremap jk <esc>
@@ -651,6 +647,12 @@
   " screen line scroll
   nnoremap <silent> j gj
   nnoremap <silent> k gk
+  " Same for 0, home, end, etc
+  noremap $ g$
+  noremap <End> g<End>
+  noremap 0 g0
+  noremap <Home> g<Home>
+  noremap ^ g^
 
   " auto center after search {{{
     nnoremap <silent> n nzz
