@@ -423,6 +423,7 @@
     "}}}
     NeoBundle 'jiangmiao/auto-pairs' " {{{
       let g:AutoPairsFlyMode = 1
+      let g:AutoPairsShortcutBackInsert = '<leader>b'
     " }}}
     NeoBundle 'skwp/vim-easymotion' "{{{
       let g:EasyMotion_keys = 'asdfghjklqwertyuiopzxcvbnm'
