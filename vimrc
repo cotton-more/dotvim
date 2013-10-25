@@ -570,7 +570,7 @@
       nnoremap <F1> :Startify<cr>
     "}}}
     NeoBundle 'scrooloose/syntastic' "{{{
-      let g:syntastic_python_checkers=['pyflakes', 'python']
+      let g:syntastic_python_checkers=['pyflakes', 'pep8', 'python']
       let g:syntastic_error_symbol='✗'
       let g:syntastic_style_error_symbol='✠'
       let g:syntastic_warning_symbol='∆'
@@ -648,12 +648,6 @@
   " screen line scroll
   nnoremap <silent> j gj
   nnoremap <silent> k gk
-  " Same for 0, home, end, etc
-  noremap $ g$
-  noremap <End> g<End>
-  noremap 0 g0
-  noremap <Home> g<Home>
-  noremap ^ g^
 
   " auto center after search {{{
     nnoremap <silent> n nzz
