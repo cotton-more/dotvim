@@ -284,6 +284,7 @@
     NeoBundle 'sjl/splice.vim'
   endif " }}} scm
   if count(s:settings.plugin_groups, 'autocomplete') "{{{
+    NeoBundle 'ervandew/supertab'
     NeoBundle 'Shougo/neosnippet'
     NeoBundle 'honza/vim-snippets'
     if s:settings.autocomplete_method == 'ycm' "{{{
