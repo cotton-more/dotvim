@@ -235,7 +235,7 @@
     NeoBundleLazy 'gregsexton/MatchTag', {'autoload':{'filetypes':['html','xml']}}
     NeoBundleLazy 'mattn/emmet-vim', {'autoload':{'filetypes':['html','xml','xsl','xslt','xsd','css','sass','scss','less','mustache']}}
     NeoBundleLazy 'beyondwords/vim-twig', {'autoload':{'filetypes':['twig','html']}} " {{{
-      autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
+      autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig.jinja2
     " }}}
   endif " }}} web
   if count(s:settings.plugin_groups, 'javascript') " {{{
@@ -284,9 +284,6 @@
     NeoBundle 'sjl/splice.vim'
   endif " }}} scm
   if count(s:settings.plugin_groups, 'autocomplete') "{{{
-    NeoBundle 'ervandew/supertab'
-    NeoBundle 'Shougo/neosnippet'
-    NeoBundle 'honza/vim-snippets'
     if s:settings.autocomplete_method == 'ycm' "{{{
       NeoBundle 'Valloric/YouCompleteMe', {'vim_version':'7.3.584'} "{{{
         let g:ycm_complete_in_comments_and_strings=1
@@ -298,7 +295,7 @@
         let g:UltiSnipsExpandTrigger="<tab>"
         let g:UltiSnipsJumpForwardTrigger="<tab>"
         let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-        let g:UltiSnipsSnippetsDir='~/.vim/snippets'
+        let g:UltiSnipsSnippetsDir='~/.vim/bundle/vim-twig/snippets'
       "}}}
     else
       NeoBundle 'Shougo/neosnippet.vim' "{{{
@@ -422,9 +419,10 @@
       nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
       vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
     "}}}
-    NeoBundle 'jiangmiao/auto-pairs' " {{{
-      let g:AutoPairsFlyMode = 1
-      let g:AutoPairsShortcutBackInsert = '<leader>b'
+    NeoBundle 'Raimondi/delimitMate' " {{{
+      let delimitMate_expand_space = 1
+      let delimitMate_nesting_quotes = ['"','`']
+      au FileType python,coffee let b:delimitMate_nesting_quotes = ['"',"'"]
     " }}}
     NeoBundle 'skwp/vim-easymotion' "{{{
       let g:EasyMotion_keys = 'asdfghjklqwertyuiopzxcvbnm'

@@ -17,3 +17,9 @@ NeoBundle 'Yggdroot/indentLine' "{{{
     let g:indentLine_char = '¦'
     let g:indentLine_color_term=236
 "}}}
+
+" use delimitMate
+NeoBundle 'jiangmiao/auto-pairs' " {{{
+  let g:AutoPairsFlyMode = 1
+  let g:AutoPairsShortcutBackInsert = '<leader>b'
+" }}}
