@@ -197,9 +197,7 @@
       set gfn=Inconsolata_LGC_Medium:h14,Consolas:h16,DejaVu_Sans_Mono:h14,Ubuntu_Mono:h16,Anonymous_Pro:h16
     endif
   else
-    if $COLORTERM == 'gnome-terminal'
-      set t_Co=256
-    endif
+    set t_Co=256
   endif
 " }}} ui configuration
 
