@@ -421,11 +421,9 @@
       let delimitMate_nesting_quotes = ['"','`']
       au FileType python,coffee let b:delimitMate_nesting_quotes = ['"',"'"]
     " }}}
-    NeoBundle 'skwp/vim-easymotion' "{{{
-      let g:EasyMotion_keys = 'asdfghjklqwertyuiopzxcvbnm'
-      autocmd ColorScheme * highlight EasyMotionTarget ctermfg=32 guifg=#0087df
-      autocmd ColorScheme * highlight EasyMotionShade ctermfg=237 guifg=#3a3a3a
-    "}}}
+    NeoBundle 'justinmk/vim-sneak' " {{{
+      let g:sneak#streak = 1
+    " }}}
   endif " }}} editing
   if count(s:settings.plugin_groups, 'indents') "{{{
     NeoBundle 'nathanaelkane/vim-indent-guides' " {{{

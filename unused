@@ -24,3 +24,9 @@ NeoBundle 'jiangmiao/auto-pairs' " {{{
   let g:AutoPairsFlyMode = 1
   let g:AutoPairsShortcutBackInsert = '<leader>b'
 " }}}
+
+NeoBundle 'skwp/vim-easymotion' "{{{
+    let g:EasyMotion_keys = 'asdfghjklqwertyuiopzxcvbnm'
+    autocmd ColorScheme * highlight EasyMotionTarget ctermfg=32 guifg=#0087df
+    autocmd ColorScheme * highlight EasyMotionShade ctermfg=237 guifg=#3a3a3a
+"}}}
