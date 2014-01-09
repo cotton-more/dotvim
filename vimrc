@@ -24,6 +24,7 @@
     call add(s:settings.plugin_groups, 'web')
     call add(s:settings.plugin_groups, 'javascript')
     call add(s:settings.plugin_groups, 'python')
+    call add(s:settings.plugin_groups, 'php')
     call add(s:settings.plugin_groups, 'scm')
     call add(s:settings.plugin_groups, 'autocomplete')
     call add(s:settings.plugin_groups, 'editing')
@@ -76,7 +77,7 @@
   set hidden                                          "allow buffer switching without saving
   set nrformats-=octal                                "always assume decimal numbers
   set showcmd
-  set tags=tags;/
+  set tags=tags;/,~/.tags
   set showfulltag
   set modeline
   set modelines=5
@@ -248,6 +249,14 @@
       let g:used_javascript_libs = 'jquery,angularjs'
     " }}}
   endif " }}} javascript
+  if count(s:settings.plugin_groups, 'javascript') " {{{
+    NeoBundle 'arnaud-lb/vim-php-namespace' " {{{
+      inoremap <Leader>u <C-O>:call PhpInsertUse()<CR>
+      noremap <Leader>u :call PhpInsertUse()<CR>
+      inoremap <Leader>e <C-O>:call PhpExpandClass()<CR>
+      noremap <Leader>e :call PhpExpandClass()<CR>
+    " }}}
+  endif " }}} php
   if count(s:settings.plugin_groups, 'python') " {{{
     NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}} " {{{
       let g:pymode_rope=0
@@ -283,6 +292,7 @@
   if count(s:settings.plugin_groups, 'autocomplete') "{{{
     if s:settings.autocomplete_method == 'ycm' "{{{
       NeoBundle 'Valloric/YouCompleteMe', {'vim_version':'7.3.584'} "{{{
+        let g:ycm_collect_identifiers_from_tags_files = 1
         let g:ycm_complete_in_comments_and_strings=1
         let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
         let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
@@ -417,6 +427,9 @@
       vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
     "}}}
     NeoBundle 'Raimondi/delimitMate' " {{{
+      let delimitMate_balance_matchpairs = 1
+      let delimitMate_jump_expansion = 1
+      let delimitMate_expand_cr = 1
       let delimitMate_expand_space = 1
       let delimitMate_nesting_quotes = ['"','`']
       au FileType python,coffee let b:delimitMate_nesting_quotes = ['"',"'"]
@@ -596,7 +609,7 @@
   nnoremap <Leader>o :only<cr>
 
   " Go to previous buffer
-  nnoremap <Leader># :b#<CR>
+  nnoremap <F12> :b#<CR>
 
   " <Leader>d: Delete the current buffer
   nnoremap <Leader>d :bdelete<CR>
