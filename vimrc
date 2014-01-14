@@ -186,6 +186,7 @@
     endif
 
     set guioptions+=t                                 "tear off menu items
+    set guioptions-=m                                 " remove menu
     set guioptions-=T                                 "toolbar icons
     set guioptions-=r " remove righthand scrollbar
     set guioptions-=R
@@ -594,7 +595,8 @@
   nnoremap <Leader>o :only<cr>
 
   " Go to previous buffer
-  nnoremap <Leader># :b#<CR>
+  nnoremap <F12> :b#<CR>
+
 
   " <Leader>d: Delete the current buffer
   nnoremap <Leader>d :bdelete<CR>
