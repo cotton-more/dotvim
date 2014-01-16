@@ -188,6 +188,7 @@
 
     set guioptions+=t                                 "tear off menu items
     set guioptions-=T                                 "toolbar icons
+    set guioptions-=m                                 " menu bar
     set guioptions-=r " remove righthand scrollbar
     set guioptions-=R
     set guioptions-=l " remove lefthand scrollbar
