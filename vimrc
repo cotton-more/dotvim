@@ -110,7 +110,7 @@
   set wildmenu                                        "show list for autocomplete
   set wildmode=list:full
   set wildignorecase
-  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store
+  set wildignore+=*/.hg/*,*/.idea/*,*/.DS_Store
 
   set splitbelow
   set splitright
@@ -194,9 +194,9 @@
     set guioptions-=l " remove lefthand scrollbar
     set guioptions-=L
 
-    set gfn=Inconsolata\ LGC\ Medium\ 14,DejaVu\ Sans\ Mono\ 14,Ubuntu\ Mono\ 16,Anonymous\ Pro\ 16
+    set gfn=Inconsolata\ LGC\ Medium\ 12,DejaVu\ Sans\ Mono\ 12,Ubuntu\ Mono\ 14,Anonymous\ Pro\ 14
     if s:is_windows
-      set gfn=Inconsolata_LGC_Medium:h14,Consolas:h16,DejaVu_Sans_Mono:h14,Ubuntu_Mono:h16,Anonymous_Pro:h16
+      set gfn=Inconsolata_LGC_Medium:h12,Consolas:h14,DejaVu_Sans_Mono:h14,Ubuntu_Mono:h14,Anonymous_Pro:h14
     endif
   else
     set t_Co=256
