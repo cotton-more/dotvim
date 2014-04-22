@@ -110,7 +110,7 @@
   let &softtabstop=s:settings.default_indent          "number of spaces per tab in insert mode
   let &shiftwidth=s:settings.default_indent           "number of spaces when indenting
   set list                                            "highlight whitespace
-  set listchars=tab:│\ ,trail:•,extends:…,precedes:<
+  set listchars=tab:·⁖,trail:•,extends:…,precedes:<
   set fillchars=vert:\|
   set shiftround
   set linebreak
