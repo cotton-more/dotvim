@@ -225,7 +225,7 @@
       let g:airline_linecolumn_prefix = '␤'
       let g:airline_branch_prefix = '⎇ '
       let g:airline_paste_symbol = 'ρ'
-      let g:airline_theme='solarized'
+      let g:airline_theme='pencil'
       let g:airline#extensions#tabline#left_sep=' '
       let g:airline#extensions#tabline#left_alt_sep='¦'
       let g:airline#extensions#tabline#enabled = 1
@@ -585,6 +585,7 @@
     "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'misc') "{{{
+    NeoBundle 'reedes/vim-wordy'
     NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
     NeoBundleLazy 'guns/xterm-color-table.vim', {'autoload':{'commands':'XtermColorTable'}}
     NeoBundle 'mhinz/vim-startify' "{{{
@@ -760,12 +761,12 @@
   NeoBundle 'baskerville/bubblegum'
   NeoBundle 'Pychimp/vim-luna'
   NeoBundle 'tomasr/molokai'
+  NeoBundle 'reedes/vim-colors-pencil'
 
-  colorscheme solarized
+  colorscheme pencil
+  set background=dark
   if has("gui_running")
     set background=light
-  else
-    set background=dark
   endif
 " color schemes }}}
 
