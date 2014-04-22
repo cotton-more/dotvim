@@ -57,11 +57,24 @@
 " }}} setup
 
 " functions {{{
-  function! EnsureExists(path) "{{{
+  function! EnsureExists(path)
     if !isdirectory(expand(a:path))
       call mkdir(expand(a:path))
     endif
-  endfunction "}}}
+  endfunction
+  " Strip whitespace {
+  function! StripTrailingWhitespace()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " do the business:
+    %s/\s\+$//e
+    " clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+  endfunction
+  " }
 " }}} functions
 
 " base configuration {{{
@@ -212,7 +225,7 @@
       let g:airline_linecolumn_prefix = '␤'
       let g:airline_branch_prefix = '⎇ '
       let g:airline_paste_symbol = 'ρ'
-      let g:airline_theme='tomorrow'
+      let g:airline_theme='solarized'
       let g:airline#extensions#tabline#left_sep=' '
       let g:airline#extensions#tabline#left_alt_sep='¦'
       let g:airline#extensions#tabline#enabled = 1
@@ -734,23 +747,24 @@
   autocmd FileType python setlocal foldmethod=indent
   autocmd FileType markdown setlocal nolist
   autocmd FileType vim setlocal fdm=indent keywordprg=:help
+  autocmd FileType c,cpp,java,go,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+
 " autocmd }}}
 
 " color schemes {{{
   NeoBundle 'altercation/vim-colors-solarized' " {{{
     let g:solarized_termcolors=256
-    let g:solarized_termtrans=1
+    let g:solarized_termtrans=0
   " }}}
   NeoBundle 'chriskempson/vim-tomorrow-theme'
   NeoBundle 'baskerville/bubblegum'
   NeoBundle 'Pychimp/vim-luna'
   NeoBundle 'tomasr/molokai'
 
+  colorscheme solarized
   if has("gui_running")
-    colorscheme Tomorrow
-    " set background=light
+    set background=light
   else
-    colorscheme Tomorrow-Night
     set background=dark
   endif
 " color schemes }}}
