@@ -30,3 +30,15 @@ NeoBundle 'skwp/vim-easymotion' "{{{
     autocmd ColorScheme * highlight EasyMotionTarget ctermfg=32 guifg=#0087df
     autocmd ColorScheme * highlight EasyMotionShade ctermfg=237 guifg=#3a3a3a
 "}}}
+
+NeoBundle 'bling/vim-airline' " {{{
+  let g:airline_left_sep = '›'
+  let g:airline_right_sep = '‹'
+  let g:airline_linecolumn_prefix = '␤'
+  let g:airline_branch_prefix = '⎇ '
+  let g:airline_paste_symbol = 'ρ'
+  let g:airline_theme='pencil'
+  let g:airline#extensions#tabline#left_sep=' '
+  let g:airline#extensions#tabline#left_alt_sep='¦'
+  let g:airline#extensions#tabline#enabled = 1
+" }}}

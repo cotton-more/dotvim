@@ -219,17 +219,7 @@
 " plugin/mapping configuration {{{
   if count(s:settings.plugin_groups, 'core') " {{{
     NeoBundle 'matchit.zip'
-    NeoBundle 'bling/vim-airline' " {{{
-      let g:airline_left_sep = '›'
-      let g:airline_right_sep = '‹'
-      let g:airline_linecolumn_prefix = '␤'
-      let g:airline_branch_prefix = '⎇ '
-      let g:airline_paste_symbol = 'ρ'
-      let g:airline_theme='pencil'
-      let g:airline#extensions#tabline#left_sep=' '
-      let g:airline#extensions#tabline#left_alt_sep='¦'
-      let g:airline#extensions#tabline#enabled = 1
-    " }}}
+    NeoBundle 'Lokaltog/powerline'
     NeoBundle 'tpope/vim-surround'
     NeoBundle 'tpope/vim-repeat'
     NeoBundle 'tpope/vim-unimpaired' " {{{
