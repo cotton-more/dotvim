@@ -219,7 +219,6 @@
 " plugin/mapping configuration {{{
   if count(s:settings.plugin_groups, 'core') " {{{
     NeoBundle 'matchit.zip'
-    NeoBundle 'Lokaltog/powerline'
     NeoBundle 'tpope/vim-surround'
     NeoBundle 'tpope/vim-repeat'
     NeoBundle 'tpope/vim-unimpaired' " {{{
@@ -755,9 +754,6 @@
 
   colorscheme pencil
   set background=dark
-  if has("gui_running")
-    set background=light
-  endif
 " color schemes }}}
 
 " finish loading {{{
