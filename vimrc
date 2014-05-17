@@ -252,7 +252,8 @@
       let g:used_javascript_libs = 'jquery,angularjs'
     " }}}
   endif " }}} javascript
-  if count(s:settings.plugin_groups, 'javascript') " {{{
+  if count(s:settings.plugin_groups, 'php') " {{{
+    NeoBundle 'spf13/PIV'
     NeoBundle 'arnaud-lb/vim-php-namespace' " {{{
       inoremap <Leader>u <C-O>:call PhpInsertUse()<CR>
       noremap <Leader>u :call PhpInsertUse()<CR>
@@ -574,6 +575,7 @@
     "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'misc') "{{{
+    NeoBundle 'evanmiller/nginx-vim-syntax'
     NeoBundle 'reedes/vim-wordy'
     NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
     NeoBundleLazy 'guns/xterm-color-table.vim', {'autoload':{'commands':'XtermColorTable'}}
