@@ -139,6 +139,15 @@
   set ignorecase                                      "ignore case for searching
   set smartcase                                       "do case-sensitive if there's a capital letter
 
+  if executable('ack')
+    set grepprg=ack\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow\ $*
+    set grepformat=%f:%l:%c:%m
+  endif
+  if executable('ag')
+    set grepprg=ag\ --nogroup\ --column\ --smart-case\ --nocolor\ --follow
+    set grepformat=%f:%l:%c:%m
+  endif
+
   " vim file/folder management {{{
     " persistent undo
     if exists('+undofile')
@@ -252,7 +261,7 @@
       let g:used_javascript_libs = 'jquery,angularjs'
     " }}}
   endif " }}} javascript
-  if count(s:settings.plugin_groups, 'javascript') " {{{
+  if count(s:settings.plugin_groups, 'php') " {{{
     NeoBundle 'arnaud-lb/vim-php-namespace' " {{{
       inoremap <Leader>u <C-O>:call PhpInsertUse()<CR>
       noremap <Leader>u :call PhpInsertUse()<CR>
@@ -459,6 +468,12 @@
     " }}}
   endif " }}} indents
   if count(s:settings.plugin_groups, 'navigation') "{{{
+    if executable('ag')
+      NeoBundle 'rking/ag.vim' "{{{
+        let g:agprg = 'ag --nogroup --nocolor --column --smart-case'
+        let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
+      " }}}
+    endif
     NeoBundleLazy 'mbbill/undotree', {'autoload':{'commands':'UndotreeToggle'}} "{{{
       let g:undotree_SplitLocation='botright'
       let g:undotree_SetFocusWhenToggle=1
@@ -492,6 +507,14 @@
       nnoremap [ctrlp]l :CtrlPLine<cr>
       nnoremap [ctrlp]o :CtrlPFunky<cr>
       nnoremap [ctrlp]b :CtrlPBuffer<cr>
+
+      if executable('ag')
+        " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+        let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+        " ag is fast enough that CtrlP doesn't need to cache
+        let g:ctrlp_use_caching = 0
+      endif
     "}}}
     NeoBundleLazy 'scrooloose/nerdtree', {'autoload':{'commands':['NERDTreeToggle','NERDTreeFind']}} "{{{
       let NERDTreeShowHidden=1
@@ -752,7 +775,7 @@
   NeoBundle 'tomasr/molokai'
   NeoBundle 'reedes/vim-colors-pencil'
 
-  colorscheme pencil
+  colorscheme solarized
   set background=dark
 " color schemes }}}
 
