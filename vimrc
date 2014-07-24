@@ -269,6 +269,7 @@
       inoremap <Leader>e <C-O>:call PhpExpandClass()<CR>
       noremap <Leader>e :call PhpExpandClass()<CR>
     " }}}
+    NeoBundle 'xsbeats/vim-blade', {'autoload':{'filetypes':['blade']}}
   endif " }}} php
   if count(s:settings.plugin_groups, 'python') " {{{
     NeoBundleLazy 'klen/python-mode', {'autoload':{'filetypes':['python']}} " {{{
@@ -550,7 +551,7 @@
 
       if executable('ag')
         let g:unite_source_grep_command='ag'
-        let g:unite_source_grep_default_opts='--nocolor --nogroup -S -C4'
+        let g:unite_source_grep_default_opts='--nocolor --line-numbers --nogroup -S -C4'
         let g:unite_source_grep_recursive_opt=''
       elseif executable('ack')
         let g:unite_source_grep_command='ack'
@@ -598,6 +599,7 @@
     "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'misc') "{{{
+    NeoBundle 'farseer90718/vim-taskwarrior'
     NeoBundle 'evanmiller/nginx-vim-syntax'
     NeoBundle 'reedes/vim-wordy'
     NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
@@ -777,11 +779,17 @@
   NeoBundle 'tomasr/molokai'
   NeoBundle 'reedes/vim-colors-pencil'
 
-  colorscheme solarized
+  exec 'colorscheme '.s:settings.colorscheme
   set background=dark
 " color schemes }}}
 
 " finish loading {{{
+  if exists('g:dotvim_settings.disabled_plugins')
+    for plugin in g:dotvim_settings.disabled_plugins
+      exec 'NeoBundleDisable '.plugin
+    endfor
+  endif
+
   filetype plugin indent on
   syntax enable
   NeoBundleCheck
