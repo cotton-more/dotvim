@@ -599,7 +599,9 @@
     "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'misc') "{{{
-    NeoBundle 'farseer90718/vim-taskwarrior'
+    if executable('task')
+      NeoBundle 'farseer90718/vim-taskwarrior'
+    endif
     NeoBundle 'evanmiller/nginx-vim-syntax'
     NeoBundle 'reedes/vim-wordy'
     NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
