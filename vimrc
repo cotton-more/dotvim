@@ -539,7 +539,7 @@
       function! bundle.hooks.on_source(bundle)
         call unite#filters#matcher_default#use(['matcher_fuzzy'])
         call unite#filters#sorter_default#use(['sorter_rank'])
-        call unite#set_profile('files', 'smartcase', 1)
+        call unite#set_profile('files', 'context.smartcase', 1)
         call unite#custom#source('line,outline','matchers','matcher_fuzzy')
       endfunction
 
@@ -599,10 +599,29 @@
     "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'misc') "{{{
+
+    NeoBundle 'bling/vim-airline' " {{{
+      let g:airline_theme='solarized'
+      if !exists('g:airline_symbols')
+        let g:airline_symbols = {}
+      endif
+      let g:airline_left_sep = ''
+      let g:airline_left_alt_sep = ''
+      let g:airline_right_sep = ''
+      let g:airline_right_alt_sep = ''
+      let g:airline_symbols.branch = ''
+      let g:airline_symbols.readonly = ''
+      let g:airline_symbols.linenr = ''
+      let g:airline#extensions#tabline#left_sep=' '
+      let g:airline#extensions#tabline#left_alt_sep='¦'
+      let g:airline#extensions#tabline#enabled = 1
+    " }}}
+
     if executable('task')
       NeoBundle 'farseer90718/vim-taskwarrior'
     endif
     NeoBundle 'evanmiller/nginx-vim-syntax'
+    NeoBundle 'veloce/vim-behat'
     NeoBundle 'reedes/vim-wordy'
     NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
     NeoBundleLazy 'guns/xterm-color-table.vim', {'autoload':{'commands':'XtermColorTable'}}
@@ -773,13 +792,15 @@
 " color schemes {{{
   NeoBundle 'altercation/vim-colors-solarized' " {{{
     let g:solarized_termcolors=256
-    let g:solarized_termtrans=0
+    let g:solarized_termtrans=1
+    let g:solarized_contrast="normal"
+    let g:solarized_visibility="normal"
   " }}}
-  NeoBundle 'chriskempson/vim-tomorrow-theme'
   NeoBundle 'baskerville/bubblegum'
   NeoBundle 'Pychimp/vim-luna'
   NeoBundle 'tomasr/molokai'
-  NeoBundle 'reedes/vim-colors-pencil'
+  NeoBundle 'nanotech/jellybeans.vim'
+  NeoBundle 'w0ng/vim-hybrid'
 
   exec 'colorscheme '.s:settings.colorscheme
   set background=dark
