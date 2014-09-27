@@ -599,9 +599,7 @@
     "}}}
   endif "}}}
   if count(s:settings.plugin_groups, 'misc') "{{{
-
     NeoBundle 'bling/vim-airline' " {{{
-      let g:airline_theme='solarized'
       if !exists('g:airline_symbols')
         let g:airline_symbols = {}
       endif
@@ -623,6 +621,7 @@
     NeoBundle 'evanmiller/nginx-vim-syntax'
     NeoBundle 'veloce/vim-behat'
     NeoBundle 'reedes/vim-wordy'
+    NeoBundle 'etaoins/vim-volt-syntax'
     NeoBundleLazy 'tpope/vim-markdown', {'autoload':{'filetypes':['markdown']}}
     NeoBundleLazy 'guns/xterm-color-table.vim', {'autoload':{'commands':'XtermColorTable'}}
     NeoBundle 'mhinz/vim-startify' "{{{
